@@ -11,4 +11,34 @@ function header({title, step, progress, back: showBack = true}) {
 }
 
 
+// our own dropdown (drawn inside the phone so it shows on Zoom and in recordings)
+// options: [{ value, label }]
+function dropdown(id, label, options, value) {
+    const open = state.openDropdown === id;
+    const current = options.find((o) => String(o.value) === String(value));
+
+    const list = options.map((o) => {
+        const selected = String(o.value) === String(value);
+        return `<button type="button" class="dropdownOption ${selected ? "selected" : ""}" role="option" aria-selected="${selected}"
+            data-a="pickOption" data-v="${id}|${o.value}"><span class="tick">${selected ? "✓" : ""}</span>${o.label}</button>`;
+    }).join("");
+
+    return `<div class="field dropdown">
+            <label id="${id}Label">${label}</label>
+            <button type="button" class="dropdownBtn ${open ? "open" : ""}" id="${id}" data-a="openDropdown" data-v="${id}"
+                aria-haspopup="listbox" aria-expanded="${open}" aria-labelledby="${id}Label ${id}">
+                <span>${current ? current.label : "Choose"}</span>${icons.chevron}
+            </button>
+            ${open ? `<div class="dropdownMenu" role="listbox">${list}</div>` : ""}
+        </div>`;
+}
+
+function dateOptions() {
+    return DATES.map((d) => ({ value: d.iso, label: d.label + ", 2026" }));
+}
+
+function hourOptions(from, to) {
+    return range(from, to).map((h) => ({ value: h, label: formatHour(h) }));
+}
+
 const SCREENS = {};

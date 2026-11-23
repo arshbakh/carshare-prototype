@@ -2,6 +2,13 @@
 Description: All the button and form handling, and the render function that draws the current screen */
 
 const actions = {
+    openDropdown: (v) => { state.openDropdown = state.openDropdown === v ? null : v; render(); },
+    pickOption: (v) => {
+        const [field, value] = v.split("|");
+        state.openDropdown = null;
+        setField(field, value);
+        render();
+    },
     go: (v) => { if (v === currentScreen()) return; go(v); },
     back: () => back(),
     tab: (v) => { state.tripTab = "upcoming"; tab(v); },
@@ -57,21 +64,27 @@ document.addEventListener("click", (e) => {
     const el = e.target.closest("[data-a]");
     if (!el || el.disabled) return;
     if (el.dataset.a !== "overlay") e.stopPropagation();
+    if (el.dataset.a !== "openDropdown" && el.dataset.a !== "pickOption") state.openDropdown = null;
     actions[el.dataset.a](el.dataset.v, el, e);
 });
 document.addEventListener("mousedown", (e) => {
     if (state.search.open && !e.target.closest(".search") && !e.target.closest("[data-a]")) { state.search.open = false; render(); }
+    if (state.openDropdown && !e.target.closest(".dropdown") && !e.target.closest("[data-a]")) { state.openDropdown = null; render(); }
 });
 
-document.addEventListener("change", (e) => {
-    const k = e.target.dataset.c; if (!k) return;
-    const v = e.target.value;
+// updates the booking or the edit when a date or time is picked
+function setField(k, v) {
     if (k === "bDate") state.booking.date = v;
     if (k === "bFrom") { state.booking.from = +v; if (state.booking.to <= state.booking.from) state.booking.to = state.booking.from + 1; }
     if (k === "bTo") state.booking.to = +v;
     if (k === "eDate") state.edit.date = v;
     if (k === "eFrom") { const dur = state.edit.to - state.edit.from; state.edit.from = +v; state.edit.to = Math.min(22, state.edit.from + dur); }
     if (k === "eTo") state.edit.to = +v;
+}
+
+document.addEventListener("change", (e) => {
+    const k = e.target.dataset.c; if (!k) return;
+    setField(k, e.target.value);
     render();
 });
 
@@ -132,6 +145,11 @@ function render(scrollTop) {
         .map(([id, label, ico]) => `<button class="${root === id ? "active" : ""}" data-a="tab" data-v="${id}" aria-current="${root === id ? "page" : "false"}">${ico}${label}</button>`).join("");
     byId("layer").innerHTML = modalHTML() + (state.toast ? `<div class="toast" role="status">${state.toast}</div>` : "");
     if (scrollTop) byId("body").scrollTop = 0;
+
+    // open dropdowns start scrolled to the selected option
+    const menu = document.querySelector(".dropdownMenu");
+    const picked = menu && menu.querySelector(".selected");
+    if (picked) menu.scrollTop = picked.offsetTop - menu.clientHeight / 2 + picked.offsetHeight / 2;
     if (currentScreen() === "filters") paintRange();
     if (currentScreen() === "chat") byId("body").scrollTop = byId("body").scrollHeight;
 }

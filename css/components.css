@@ -152,6 +152,86 @@ Description: Styling for the parts used on many screens: cards, feedback message
 }
 
 .field select,
+.dropdown{
+    position: relative;
+}
+
+.dropdownBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 16px 12px 18px;
+    font-size: 15px;
+    background: var(--surface);
+    text-align: left;
+}
+
+.dropdownBtn:hover{
+    border-color: #9ab9b0;
+}
+
+.dropdownBtn.open{
+    border-color: var(--brand);
+}
+
+.dropdownBtn .chev{
+    color: var(--muted);
+    flex: none;
+    transition: transform 0.15s;
+}
+
+.dropdownBtn.open .chev{
+    transform: rotate(180deg);
+}
+
+.dropdownMenu{
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    max-height: 244px;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    padding: 6px;
+    z-index: 10;
+    animation: fade 0.12s;
+}
+
+.dropdownOption{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 15px;
+    text-align: left;
+}
+
+.dropdownOption:hover{
+    background: var(--bg);
+}
+
+.dropdownOption.selected{
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+}
+
+.dropdownOption .tick{
+    width: 16px;
+    flex: none;
+}
+
 .field textarea{
     border: 1.5px solid var(--line);
     border-radius: 12px;

@@ -18,6 +18,7 @@ const state = {
     chat: [{ me: false, text: "Hi! I’m Sam from CarShare support. How can I help with your trip today?" }],
     faqOpen: -1,
     modal: null,
+    openDropdown: null,
     toast: null,
 };
 
@@ -29,17 +30,20 @@ function currentScreen() {
 }
 
 function go(screen) {
+    state.openDropdown = null;
     state.stack.push(screen);
     state.search.open = false;
     render(true);
 }
 
 function back() {
+    state.openDropdown = null;
     if (state.stack.length > 1) state.stack.pop();
     render(true);
 }
 
 function tab(root) {
+    state.openDropdown = null;
     state.stack = [root];
     state.banner = null;
     render(true);

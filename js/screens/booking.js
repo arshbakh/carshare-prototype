@@ -8,11 +8,10 @@ SCREENS.time = function () {
         header: header({ title: "Booking time", step: "Step 4 of 5 · Set pickup and return", progress: 4 }),
         body: `
             <div class="summaryChip"><span class="sw" style="background:${c.color}"></span>${c.name} · ${c.lot} · $${c.price}/hr</div>
-            <div class="field"><label for="bDate">Date</label>
-                <select id="bDate" data-c="bDate">${DATES.map((d) => `<option value="${d.iso}" ${d.iso === b.date ? "selected" : ""}>${d.label}, 2026</option>`).join("")}</select></div>
+            ${dropdown("bDate", "Date", dateOptions(), b.date)}
             <div class="two">
-                <div class="field"><label for="bFrom">Pickup</label><select id="bFrom" data-c="bFrom">${range(7,21).map((h) => `<option value="${h}" ${h === b.from ? "selected" : ""}>${formatHour(h)}</option>`).join("")}</select></div>
-                <div class="field"><label for="bTo">Return</label><select id="bTo" data-c="bTo">${range(b.from + 1, 22).map((h) => `<option value="${h}" ${h === b.to ? "selected" : ""}>${formatHour(h)}</option>`).join("")}</select></div>
+                ${dropdown("bFrom", "Pickup", hourOptions(7, 21), b.from)}
+                ${dropdown("bTo", "Return", hourOptions(b.from + 1, 22), b.to)}
             </div>
             ${err ? `<div class="feedback err">✗ <span>${err}</span></div>` : `<div class="feedback ok">✓ <span>Available for your full time slot.</span></div>`}
             <div class="card" style="margin-top:12px"><div class="rows">

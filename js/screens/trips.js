@@ -49,11 +49,10 @@ SCREENS.change = function () {
         header: header({ title: "Change time", step: `Editing your ${c.name} trip (${t.id})` }),
         body: `
             <div class="summaryChip"><span class="sw" style="background:${c.color}"></span>Now: ${dateLabel(t.date)} · ${formatHour(t.from)}–${formatHour(t.to)} · $${oldTotal}</div>
-            <div class="field"><label for="eDate">New date</label>
-                <select id="eDate" data-c="eDate">${DATES.map((d) => `<option value="${d.iso}" ${d.iso === e.date ? "selected" : ""}>${d.label}, 2026</option>`).join("")}</select></div>
+            ${dropdown("eDate", "New date", dateOptions(), e.date)}
             <div class="two">
-                <div class="field"><label for="eFrom">New pickup</label><select id="eFrom" data-c="eFrom">${range(7,21).map((h) => `<option value="${h}" ${h === e.from ? "selected" : ""}>${formatHour(h)}</option>`).join("")}</select></div>
-                <div class="field"><label for="eTo">New return</label><select id="eTo" data-c="eTo">${range(e.from + 1, 22).map((h) => `<option value="${h}" ${h === e.to ? "selected" : ""}>${formatHour(h)}</option>`).join("")}</select></div>
+                ${dropdown("eFrom", "New pickup", hourOptions(7, 21), e.from)}
+                ${dropdown("eTo", "New return", hourOptions(e.from + 1, 22), e.to)}
             </div>
             ${same ? `<div class="feedback info"><span>Pick a new date or time above.</span></div>`
                 : err ? `<div class="feedback err">✗ <span>${err}</span></div>`
