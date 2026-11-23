@@ -1,0 +1,53 @@
+/* Base: design tokens, reset, phone frame, header, buttons, bottom navigation */
+:root{
+  --brand:#0e5a4b; --brand-700:#0a4439; --brand-50:#e6f1ee; --brand-100:#cfe5df;
+  --ink:#14201d; --muted:#5d6b67; --line:#dbe3e0; --bg:#f4f6f5; --surface:#ffffff;
+  --ok:#1d7a4c; --ok-50:#e5f4ec; --warn:#8a5300; --warn-50:#fff3dc; --err:#b3261e; --err-50:#fdeceb;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#d6dddb;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px 12px;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:3px solid #f0a020;outline-offset:2px}
+
+/* ---------- phone frame ---------- */
+.phone{width:390px;height:844px;background:var(--bg);border-radius:46px;box-shadow:0 0 0 11px #161a19,0 0 0 13px #3a403e,0 30px 70px rgba(0,0,0,.35);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.statusbar{height:46px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 6px;font-size:15px;font-weight:600;background:var(--surface)}
+.statusbar .icons{display:flex;gap:6px;align-items:center}
+.caption{margin-top:26px;font-size:12px;color:#46524f;text-align:center;line-height:1.5}
+
+/* ---------- header ---------- */
+header.app{background:var(--surface);padding:4px 18px 12px;border-bottom:1px solid var(--line);flex:none}
+.brandrow{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px}
+.brand i{width:9px;height:9px;border-radius:3px;background:var(--brand);display:inline-block}
+.helplink{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--brand)}
+.titlerow{display:flex;align-items:center;gap:8px;margin-top:8px;min-height:32px}
+.back{background:none;border:none;padding:4px 8px 4px 0;font-size:15px;font-weight:600;color:var(--brand);display:flex;align-items:center;gap:2px}
+h1.title{font-size:23px;line-height:1.15;margin:0;font-weight:750;letter-spacing:-.01em}
+.step{font-size:12.5px;color:var(--muted);margin-top:4px}
+.progress{height:4px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}
+.progress>span{display:block;height:100%;background:var(--brand);border-radius:4px}
+
+/* ---------- body / bars ---------- */
+main.content{flex:1;overflow-y:auto;padding:16px 18px 22px}
+.cta-bar{flex:none;padding:12px 18px;background:var(--surface);border-top:1px solid var(--line)}
+.cta-bar .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+.btn{width:100%;border:none;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:650;background:var(--brand);color:#fff;display:flex;justify-content:center;align-items:center;gap:6px}
+.btn:hover:not(:disabled){background:var(--brand-700)}
+.btn:disabled{background:#b9c5c1;color:#f4f6f5}
+.btn.secondary{background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
+.btn.secondary:hover{background:var(--bg)}
+.btn.danger{background:var(--err)}
+.btn.danger:hover{background:#8f1e18}
+.btn.small{padding:10px 12px;font-size:14px;border-radius:10px}
+.btn-row{display:flex;gap:10px}
+.linkbtn{background:none;border:none;color:var(--brand);font-weight:600;padding:0;font-size:14px}
+
+nav.tabs{flex:none;display:flex;background:var(--surface);border-top:1px solid var(--line);padding:6px 10px 24px}
+nav.tabs button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;font-weight:600;color:#7d8a86;padding:6px 0;border-radius:10px}
+nav.tabs button.active{color:var(--brand);background:var(--brand-50)}
+nav.tabs svg{width:22px;height:22px}
